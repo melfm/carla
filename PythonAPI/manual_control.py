@@ -29,8 +29,8 @@ from __future__ import print_function
 import sys
 
 sys.path.append(
-    'PythonAPI/carla-0.9.0-py%d.%d-linux-x86_64.egg' % (sys.version_info.major,
-                                                        sys.version_info.minor))
+    'dist/carla-0.9.0-py%d.%d-linux-x86_64.egg' % (sys.version_info.major,
+                                                   sys.version_info.minor))
 
 import carla
 
@@ -54,12 +54,14 @@ try:
     from pygame.locals import K_s
     from pygame.locals import K_w
 except ImportError:
-    raise RuntimeError('cannot import pygame, make sure pygame package is installed')
+    raise RuntimeError(
+        'cannot import pygame, make sure pygame package is installed')
 
 try:
     import numpy as np
 except ImportError:
-    raise RuntimeError('cannot import numpy, make sure numpy package is installed')
+    raise RuntimeError(
+        'cannot import numpy, make sure numpy package is installed')
 
 
 WINDOW_WIDTH = 800
@@ -87,11 +89,13 @@ class CarlaGame(object):
             logging.debug('pygame started')
 
             world = self._client.get_world()
-            blueprint = random.choice(world.get_blueprint_library().filter('vehicle'))
+            blueprint = random.choice(
+                world.get_blueprint_library().filter('vehicle'))
             self._vehicle = world.spawn_actor(blueprint, START_POSITION)
             self._vehicle.set_autopilot(self._autopilot_enabled)
             cam_blueprint = world.get_blueprint_library().find('sensor.camera')
-            self._camera = world.spawn_actor(cam_blueprint, CAMERA_POSITION, attach_to=self._vehicle)
+            self._camera = world.spawn_actor(
+                cam_blueprint, CAMERA_POSITION, attach_to=self._vehicle)
 
             self._camera.listen(lambda image: self._parse_image(image))
 

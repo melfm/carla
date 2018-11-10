@@ -3,8 +3,8 @@
 import sys
 
 sys.path.append(
-    'PythonAPI/carla-0.9.0-py%d.%d-linux-x86_64.egg' % (sys.version_info.major,
-                                                        sys.version_info.minor))
+    'dist/carla-0.9.0-py%d.%d-linux-x86_64.egg' % (sys.version_info.major,
+                                                   sys.version_info.minor))
 
 import carla
 
@@ -18,14 +18,15 @@ LOCATION = carla.Location(x=155.5, y=55.8, z=39)
 def get_transform(angle, d=6.5):
     a = math.radians(angle)
     location = carla.Location(d * math.cos(a), d * math.sin(a), 2.0) + LOCATION
-    return carla.Transform(location, carla.Rotation(yaw=180 + angle, pitch=-15))
+    return carla.Transform(location, carla.Rotation(
+                               yaw=180 + angle, pitch=-15))
 
 
 def main():
     client = carla.Client('localhost', 2000)
     world = client.get_world()
     spectator = world.get_spectator()
-    vehicle_blueprints = world.get_blueprint_library().filter('vehicle');
+    vehicle_blueprints = world.get_blueprint_library().filter('vehicle')
 
     for blueprint in vehicle_blueprints:
         transform = carla.Transform(LOCATION, carla.Rotation(yaw=-45.0))

@@ -3,24 +3,26 @@ CARLA Simulator
 
 This repository contains a *modified* version of CARLA 0.9.0. The Python client provided in this repo can be used either with the provided Unreal project or a binary release of CARLA 0.9.0, which will be available here soon.
 
+
+## Requirements
+- `Python2.7`
+- `cmake 3.9.0`
+
 ## Using the Unreal project
 
 The following instructions assume CARLA will be built from source. Detailed instructions for CARLA are available [here](https://carla.readthedocs.io/en/stable/how_to_build_on_linux/).
 
-1. Ensure Unreal 4.18 is installed and `UE4_ROOT` is set to the root of your Unreal 4.18 directory.
+1. Ensure Unreal 4.19 is installed and `UE4_ROOT` is set to the root of your Unreal 4.19 directory. At the moment you need to compile and build it from source.
+```
+# e.g.
+export UE4_ROOT=~/UnrealEngine-4.19/
+```
 2. Run:
 - `./Update.sh`, to download all CARLA content
-- `./Setup.sh`, to perform setup of all CARLA dependencies. Note: Make sure that this setup runs successfully. A common cause for it to fail is when `/usr/bin/clang` does not point to `/usr/bin/clang-3.9`and `/usr/bin/clang++`does not point to `/usr/bin/clang++-3.9`. This can be alleviated using appropriate symlinks. For example,
+3. make launch   # Compiles CARLA and launches Unreal Engine's Editor.
+4. make package  # (Optional) Compiles CARLA and creates a packaged version for distribution.
+5. make PythonAPI   # To be able to run python client code, but make sure you already ran the previous steps excluding 4.
 
-`$ sudo ln -s /usr/bin/clang-3.9 /usr/bin/clang`
-
-`$ sudo ln -s /usr/bin/clang++-3.9 /usr/bin/clang++`.
-- `UE4_ROOT=~/UnrealEngine_4.19 ./Rebuild.sh` to build the Unreal project. It looks at the environment variable `UE4_ROOT` to find the right version of Unreal Engine. You can also add this variable to your `~/.bashrc` or similar.
-3. The Unreal project should now be fully build. You should be able to open the project in Unreal, run the default map, and drive around as normal.
-4. `cd PythonClient` and `pip3 install --user -r requirements.txt`, to install all required Python dependencies.
-5. `./manual_control.py`. You will see errors from the client while it tries to connect to a server that does not exist yet.
-6. Open `carla-pysim/Unreal/CarlaUE4/Config/CarlaSettings.ini`, change `UseNetworking` on line 12 to `true`, and play the level from the Unreal editor.
-7. The client window and game window should appear, and you should be able to drive the car around using the WASD keys as usual.
 
 ## Useful commands
 - Launching the editor
